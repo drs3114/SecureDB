@@ -1,3 +1,3 @@
-# Play Java Product with JPA
+# SecureDBApp
 
-This project demonstrate how to create a simple CRUD application with Play, using JPA.
+This project servers as the backend application over which Security will be implemented.
