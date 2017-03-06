@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(D:\CSCI622\Project\SecureDB\conf\application.conf,D:\CSCI622\Project\SecureDB\target\scala-2.11\classes\application.conf)[0m
+[0m[[0mdebug[0m] [0m	(D:\CSCI622\Project\SecureDB\conf\logback.xml,D:\CSCI622\Project\SecureDB\target\scala-2.11\classes\logback.xml)[0m
+[0m[[0mdebug[0m] [0m	(D:\CSCI622\Project\SecureDB\conf\META-INF,D:\CSCI622\Project\SecureDB\target\scala-2.11\classes\META-INF)[0m
+[0m[[0mdebug[0m] [0m	(D:\CSCI622\Project\SecureDB\conf\routes,D:\CSCI622\Project\SecureDB\target\scala-2.11\classes\routes)[0m
+[0m[[0mdebug[0m] [0m	(D:\CSCI622\Project\SecureDB\conf\META-INF\persistence.xml,D:\CSCI622\Project\SecureDB\target\scala-2.11\classes\META-INF\persistence.xml)[0m
