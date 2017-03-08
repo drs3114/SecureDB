@@ -2,9 +2,15 @@ name := """SecureDBApp"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 scalaVersion := "2.11.8"
+
+libraryDependencies += jdbc
+
+libraryDependencies += javaJdbc
+
+libraryDependencies += evolutions
 
 libraryDependencies += javaJpa
 
