@@ -3,11 +3,16 @@
  */
 package models;
 
+import java.sql.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Model;
@@ -21,27 +26,105 @@ import com.avaje.ebean.Model;
 public class Employee extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 
+	@Column(name = "FIRST_NAME")
+	private String firstName;
+
+	@Column(name = "LAST_NAME")
+	private String lastName;
+
+	@Column(name = "EMAIL")
+	private String email;
+
+	@Column(name = "DOB")
+	private Date dateOfBirth;
+
+	@Column(name = "WORKS_FOR")
+	@OneToOne(cascade = CascadeType.ALL)
+	private Employer worksFor;
+
+	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	/**
+	 * 
+	 * @return
+	 */
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	/**
+	 * 
+	 * @param firstName
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String name;
-	
-	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
+	/**
+	 * 
+	 * @return
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * 
+	 * @param lastName
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * 
+	 * @param email
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	/**
+	 * 
+	 * @param dateOfBirth
+	 */
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
 	public Employee() {
 		super();

@@ -3,22 +3,29 @@
  */
 package models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.avaje.ebean.Model;
 
 /**
- * @author Deepak Shankar
+ * @author deepak
  *
  */
 @Entity
-@Table(name = "EMPLOYER")
-public class Employer extends Model {
+@Table(name = "DEPARTMENT")
+public class Department extends Model {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,11 +35,13 @@ public class Employer extends Model {
 	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "ADDRESS")
-	private String address;
+	@Column(name = "EMPLOYER")
+	@OneToOne(cascade=CascadeType.ALL)
+	public Employer employer;
 
-	@Column(name = "NO_OF_EMPLOYEES")
-	private int noOfEmployees;
+	@Column(name = "EMPLOYEES")
+	@OneToMany(cascade=CascadeType.ALL)
+	public List<Employee> employees;
 	
 	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
 
@@ -52,20 +61,20 @@ public class Employer extends Model {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public Employer getEmployer() {
+		return employer;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
 	}
 
-	public int getNoOfEmployees() {
-		return noOfEmployees;
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setNoOfEmployees(int noOfEmployees) {
-		this.noOfEmployees = noOfEmployees;
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 }

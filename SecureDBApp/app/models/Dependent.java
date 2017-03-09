@@ -3,22 +3,24 @@
  */
 package models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Model;
 
 /**
- * @author Deepak Shankar
+ * @author deepak
  *
  */
 @Entity
-@Table(name = "EMPLOYER")
-public class Employer extends Model {
+@Table(name = "DEPENDENT")
+public class Dependent extends Model {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,12 +30,13 @@ public class Employer extends Model {
 	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "ADDRESS")
-	private String address;
+	@Column(name = "DEPNDENT_TO")
+	@OneToOne(cascade=CascadeType.ALL)
+	private Employee dependentTo;
 
-	@Column(name = "NO_OF_EMPLOYEES")
-	private int noOfEmployees;
-	
+	@Column(name = "RELATIONSHIP")
+	private String relationship;
+
 	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
 
 	public long getId() {
@@ -52,20 +55,20 @@ public class Employer extends Model {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public Employee getDependentTo() {
+		return dependentTo;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setDependentTo(Employee dependentTo) {
+		this.dependentTo = dependentTo;
 	}
 
-	public int getNoOfEmployees() {
-		return noOfEmployees;
+	public String getRelationship() {
+		return relationship;
 	}
 
-	public void setNoOfEmployees(int noOfEmployees) {
-		this.noOfEmployees = noOfEmployees;
+	public void setRelationship(String relationship) {
+		this.relationship = relationship;
 	}
 
 }
