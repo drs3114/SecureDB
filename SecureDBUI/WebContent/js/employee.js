@@ -70,12 +70,12 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 		result.success(function(data, status, headers, config) {
 			$scope.message = data;
 			$scope.success = true;
-		};
+		});
 
 		result.error(function(data, status, headers, config) {
 			$scope.message = data;
 			$scope.success = false;
-		};
+		});
 	};
 
 	$scope.getDependents = function() {
@@ -98,7 +98,7 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 		result.error(function(data, status, headers, config) {
 			$scope.message = data;
 			$scope.success = false;
-		};
+		});
 	};
 
 } ]);
