@@ -12,6 +12,12 @@ create table department (
 );
 create sequence DEPARTMENT_seq;
 
+create table department_employee (
+  department_id                 number(19) not null,
+  employee_id                   number(19) not null,
+  constraint pk_department_employee primary key (department_id,employee_id)
+);
+
 create table dependent (
   id                            number(19) not null,
   name                          varchar2(255),
@@ -24,7 +30,6 @@ create sequence DEPENDENT_seq;
 
 create table employee (
   id                            number(19) not null,
-  department_id                 number(19) not null,
   first_name                    varchar2(255),
   last_name                     varchar2(255),
   email                         varchar2(255),
@@ -46,10 +51,13 @@ create sequence EMPLOYER_seq;
 
 alter table department add constraint fk_department_employer_id foreign key (employer_id) references employer (id);
 
-alter table dependent add constraint fk_dependent_dependent_to_id foreign key (dependent_to_id) references employee (id);
+alter table department_employee add constraint fk_dprtmnt_mply_dprtmnt foreign key (department_id) references department (id);
+create index ix_dprtmnt_mply_dprtmnt on department_employee (department_id);
 
-alter table employee add constraint fk_employee_department_id foreign key (department_id) references department (id);
-create index ix_employee_department_id on employee (department_id);
+alter table department_employee add constraint fk_dprtmnt_mply_mply foreign key (employee_id) references employee (id);
+create index ix_dprtmnt_mply_mply on department_employee (employee_id);
+
+alter table dependent add constraint fk_dependent_dependent_to_id foreign key (dependent_to_id) references employee (id);
 
 alter table employee add constraint fk_employee_works_for_id foreign key (works_for_id) references employer (id);
 
@@ -58,15 +66,20 @@ alter table employee add constraint fk_employee_works_for_id foreign key (works_
 
 alter table department drop constraint if exists fk_department_employer_id;
 
-alter table dependent drop constraint if exists fk_dependent_dependent_to_id;
+alter table department_employee drop constraint if exists fk_dprtmnt_mply_dprtmnt;
+drop index if exists ix_dprtmnt_mply_dprtmnt;
 
-alter table employee drop constraint if exists fk_employee_department_id;
-drop index if exists ix_employee_department_id;
+alter table department_employee drop constraint if exists fk_dprtmnt_mply_mply;
+drop index if exists ix_dprtmnt_mply_mply;
+
+alter table dependent drop constraint if exists fk_dependent_dependent_to_id;
 
 alter table employee drop constraint if exists fk_employee_works_for_id;
 
 drop table department cascade constraints purge;
 drop sequence DEPARTMENT_seq;
+
+drop table department_employee cascade constraints purge;
 
 drop table dependent cascade constraints purge;
 drop sequence DEPENDENT_seq;

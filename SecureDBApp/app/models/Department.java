@@ -11,11 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
 
 import com.avaje.ebean.Model;
 
@@ -40,7 +39,7 @@ public class Department extends Model {
 	public Employer employer;
 
 	@Column(name = "EMPLOYEES")
-	@OneToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Employee> employees;
 	
 	public static Finder<Long, Employee> find = new Finder<>(Employee.class);

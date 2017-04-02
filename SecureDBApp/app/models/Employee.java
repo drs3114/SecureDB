@@ -26,6 +26,7 @@ import com.avaje.ebean.Model;
 public class Employee extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="ID")
 	private Long id;
 
 	@Column(name = "FIRST_NAME")
@@ -124,6 +125,22 @@ public class Employee extends Model {
 	 */
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Employer getEmployer() {
+		return this.worksFor;
+	}
+
+	/**
+	 * 
+	 * @param employer
+	 */
+	public void setEmployer(Employer employer) {
+		this.worksFor = employer;
 	}
 
 	public Employee() {
