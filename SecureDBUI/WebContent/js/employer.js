@@ -78,7 +78,7 @@ employee.controller('employerController', [ '$scope', '$http', function($scope, 
 		});
 	};
 
-	$scope.getDependents = function() {
+	$scope.getEmployees = function() {
 		var getURL = "http://localhost:9000/employer/employee";
 
 		var employeeData = {
