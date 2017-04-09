@@ -7,21 +7,29 @@
 
 var employee = angular.module('employeeApp', []);
 
-employee.controller('employeeController', [ '$scope', '$http', function($scope, $http) {
+employee.controller('employeeController',function($scope, $http) {
+	sessionStorage.setItem("userName", "deepak")
+	sessionStorage.setItem("userId", "4");
+	
+	$scope.user = sessionStorage.getItem("userName");
+	$scope.userId = sessionStorage.getItem("userId");
+	console.log("the user is : "+$scope.user);
 
 	$scope.addDependent = function() {
-		var addUrl = "http://localhost:9000/employee/dependent";
+		var addUrl = "http://localhost:9000/employee/";
+		addUrl+=$scope.userId.toString()+"/dependents"
 
 		var dependentData = {
 			id : 0,
 			name : $scope.dependent.name,
-			dependentTo : $scope.employee,
+			dependentTo : $scope.userId,
 			relationship : $scope.dependent.relationship
 		};
 
 		var result = $http.post(addUrl, dependentData);
 
 		result.success(function(data, status, headers, config) {
+			alert(data);
 			$scope.message = data;
 			$scope.success = true;
 		});
@@ -36,10 +44,10 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 		var updateURL = "http://localhost:9000/employee/dependent";
 
 		var upDependentData = {
-			id: 0,
-			name: $scope.dependent.name,
-			dependentTo: $scope.employee,
-			relationship: $scope.dependent.relationship
+			id : 0,
+			name : $scope.dependent.name,
+			dependentTo : $scope.employee,
+			relationship : $scope.dependent.relationship
 		};
 
 		var result = $http.put(updateURL, upDependentData);
@@ -59,13 +67,11 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 		var removeURL = "http://localhost:9000/employee/dependent";
 
 		var dependentData = {
-			id: 0,
-			name: $scope.dependent.name,
-			dependentTo: $scope.employee,
-			relationship: $scope.dependent.relationship
+			id : 0,
+			name : $scope.dependent.name,
+			dependentTo : $scope.employee,
+			relationship : $scope.dependent.relationship
 		};
-
-		var result = $http.delete(removeURL, dependentData);
 
 		result.success(function(data, status, headers, config) {
 			$scope.message = data;
@@ -79,16 +85,10 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 	};
 
 	$scope.getDependents = function() {
-		var getURL = "http://localhost:9000/employee/dependent";
+		var getURL = "http://localhost:9000/employee/";
+		getURL+= sessionStorage.getItem("userId").toString()+"/dependents";
 
-		var dependentData = {
-			id: 0,
-			name: $scope.dependent.name,
-			dependentTo: $scope.employee,
-			relationship: $scope.dependent.relationship
-		};
-
-		var result = $http.get(getURL, dependentData);
+		var result = $http.get(getURL)
 
 		result.success(function(data, status, headers, config) {
 			$scope.message = data;
@@ -101,4 +101,4 @@ employee.controller('employeeController', [ '$scope', '$http', function($scope, 
 		});
 	};
 
-} ]);
+});
