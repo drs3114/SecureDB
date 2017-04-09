@@ -26,7 +26,7 @@ import com.avaje.ebean.Model;
 public class Employee extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID")
+	@Column(name = "ID")
 	private Long id;
 
 	@Column(name = "FIRST_NAME")
@@ -35,7 +35,7 @@ public class Employee extends Model {
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", unique = true)
 	private String email;
 
 	@Column(name = "DOB")

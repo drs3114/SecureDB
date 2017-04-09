@@ -37,7 +37,7 @@ public class Dependent extends Model {
 	@Column(name = "RELATIONSHIP")
 	private String relationship;
 
-	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
+	public static Finder<Long, Dependent> find = new Finder<>(Dependent.class);
 
 	public long getId() {
 		return id;

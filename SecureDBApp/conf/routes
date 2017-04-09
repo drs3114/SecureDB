@@ -3,11 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.PersonController.index()
-POST    /person                     controllers.PersonController.addPerson()
-GET     /person                     controllers.PersonController.getPersons()
+GET     /                           controllers.AppController.index()
+#POST    /person                     controllers.PersonController.addPerson()
+#GET     /person                     controllers.PersonController.getPersons()
 GET		/employees					controllers.EmployeeController.getAllEmployees()
+#GET		/employee/*id				controllers.EmployeeController.getAllEmployees()
+#GET		/employee/*name				controllers.EmployeeController.getAllEmployees()
 POST    /employee					controllers.EmployeeController.addEmployee()
+#POST	/employee/dependent			controllers.DependentController.addDependent()
+GET		/employee/*eid/dependents	controllers.EmployeeController.getAllDependents(eid: Int)
+POST	/employee/*eid/dependents	controllers.EmployeeController.addDependent(eid: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

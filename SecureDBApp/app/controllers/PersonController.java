@@ -20,7 +20,10 @@ public class PersonController extends Controller {
 
 	public Result index() {
 		return ok(views.html.index.render());
+		//return ok();
 	}
+	
+	//views.html.index.render()
 
 	public Result addPerson() {
 		Employee employee = null;

@@ -35,6 +35,7 @@ create table employee (
   email                         varchar2(255),
   dob                           date,
   works_for_id                  number(19),
+  constraint uq_employee_email unique (email),
   constraint uq_employee_works_for_id unique (works_for_id),
   constraint pk_employee primary key (id)
 );
