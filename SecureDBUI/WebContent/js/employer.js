@@ -7,8 +7,13 @@
 
 var employee = angular.module('employerApp', []);
 
-employee.controller('employerController', [ '$scope', '$http', function($scope, $http) {
-
+employee.controller('employerController, function($scope, $http) {
+	sessionStorage.setItem("userName", "deepak")
+	sessionStorage.setItem("userId", "4");
+	$scope.user = sessionStorage.getItem("userName");
+	$scope.userId = sessionStorage.getItem("userId");
+	console.log("the user is : "+$scope.user);
+		
 	$scope.addEmployee = function() {
 		var addUrl = "http://localhost:9000/employer/employee";
 
