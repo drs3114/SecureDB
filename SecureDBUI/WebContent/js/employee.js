@@ -7,26 +7,27 @@
 
 var employee = angular.module('employeeApp', []);
 
-employee.controller('employeeController',function($scope, $http) {
-	sessionStorage.setItem("userName", "deepak")
-	sessionStorage.setItem("userId", "4");
-	
+employee.controller('employeeController', function($scope, $http) {
+	/*$scope.sessionUser = $http.get("http://localhost:9000/sessionDetails");
+	sessionStorage.setItem("userName", $scope.sessionUser.username);
+	sessionStorage.setItem("userRole",$scope.sessionUser.userRole)
 	$scope.user = sessionStorage.getItem("userName");
 	$scope.userId = sessionStorage.getItem("userId");
-	console.log("the user is : "+$scope.user);
+	console.log("the user is : " + $scope.user);*/
 
 	$scope.addDependent = function() {
-		var addUrl = "http://localhost:9000/employee/";
-		addUrl+=$scope.userId.toString()+"/dependents"
+		var addUrl = "http://localhost:9000/employee/dependent";
 
 		var dependentData = {
-			id : 0,
-			name : $scope.dependent.name,
-			dependentTo : $scope.userId,
-			relationship : $scope.dependent.relationship
+			"id" : "123",
+			"name" : $scope.dependent.name,
+			"dependentTo" : "456",
+			"relationship" : $scope.dependent.relationship
 		};
+		
+		console.log(dependentData)
 
-		var result = $http.post(addUrl, dependentData);
+		var result = $http.post(addUrl, JSON.stringify(dependentData));
 
 		result.success(function(data, status, headers, config) {
 			alert(data);

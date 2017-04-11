@@ -1,6 +1,12 @@
+import com.github.play2war.plugin._
+
 name := """SecureDBApp"""
 
 version := "1.0-SNAPSHOT"
+
+Play2WarPlugin.play2WarSettings
+
+Play2WarKeys.servletVersion := "3.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
@@ -11,6 +17,8 @@ libraryDependencies += jdbc
 libraryDependencies += javaJdbc
 
 libraryDependencies += evolutions
+
+libraryDependencies += filters
 
 libraryDependencies += javaJpa
 

@@ -41,7 +41,7 @@ public class Department extends Model {
 	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Employee> employees;
 	
-	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
+	public static Finder<Long, Department> find = new Finder<>(Department.class);
 
 	public long getId() {
 		return id;

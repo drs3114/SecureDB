@@ -34,7 +34,7 @@ public class Employer extends Model {
 	@Column(name = "NO_OF_EMPLOYEES")
 	private int noOfEmployees;
 	
-	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
+	public static Finder<Long, Employer> find = new Finder<>(Employer.class);
 
 	public long getId() {
 		return id;

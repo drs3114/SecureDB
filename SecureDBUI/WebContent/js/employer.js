@@ -5,72 +5,29 @@
  * This is a javaScript App that is used to control the functionalities of the employee.html file
  */
 
-var employee = angular.module('employerApp', []);
+var employer = angular.module('employerApp', []);
 
-employee.controller('employerController, function($scope, $http) {
-	sessionStorage.setItem("userName", "deepak")
-	sessionStorage.setItem("userId", "4");
-	$scope.user = sessionStorage.getItem("userName");
-	$scope.userId = sessionStorage.getItem("userId");
-	console.log("the user is : "+$scope.user);
-		
+employer.controller('employerController', function($scope, $location, $http) {
+
+	/*$scope.ssuser.username = getUrlParameter('username');
+	$scope.ssuser.username = getUrlParameter('role');
+	console.log($scope.ssuser);
+	console.log("the user is: " + $scope.ssuser.username);
+	console.log("the role is: " + $scope.ssuser.role);*/
+	
+	
 	$scope.addEmployee = function() {
-		var addUrl = "http://localhost:9000/employer/employee";
+		var addUrl = "http://localhost:9000/employee";
 
 		var employeeData = {
 			id : 0,
-			name : $scope.employee.name,
-			employeeTo : $scope.employer,
-			relationship : $scope.employee.relationship
+			fname : $scope.employee.fname,
+			lname : $scope.employee.lname,
+			email : $scope.employee.email,
+			department : $scope.employee.department
 		};
 
-		var result = $http.post(addUrl, employeeData);
-
-		result.success(function(data, status, headers, config) {
-			$scope.message = data;
-			$scope.success = true;
-		});
-
-		result.error(function(data, status, headers, config) {
-			$scope.message = data;
-			$scope.success = false;
-		});
-	};
-
-	$scope.updateemployee = function() {
-		var updateURL = "http://localhost:9000/employer/employee";
-
-		var employeeData = {
-			id: 0,
-			name : $scope.employee.name,
-			employeeTo : $scope.employer,
-			relationship : $scope.employee.relationship
-		};
-
-		var result = $http.put(updateURL, employeeData);
-
-		result.success(function(data, status, headers, config) {
-			$scope.message = data;
-			$scope.success = true;
-		});
-
-		result.error(function(data, status, headers, config) {
-			$scope.message = data;
-			$scope.success = false;
-		});
-	};
-
-	$scope.removeEmployee = function() {
-		var removeURL = "http://localhost:9000/employer/employee";
-
-		var employeeData = {
-			id: 0,
-			name : $scope.employee.name,
-			employeeTo : $scope.employer,
-			relationship : $scope.employee.relationship
-		};
-
-		var result = $http.delete(removeURL, employeeData);
+		$scope.emps=$http.post(addUrl, employeeData);
 
 		result.success(function(data, status, headers, config) {
 			$scope.message = data;
@@ -84,16 +41,9 @@ employee.controller('employerController, function($scope, $http) {
 	};
 
 	$scope.getEmployees = function() {
-		var getURL = "http://localhost:9000/employer/employee";
-
-		var employeeData = {
-			id: 0,
-			name : $scope.employee.name,
-			employeeTo : $scope.employer,
-			relationship : $scope.employee.relationship
-		};
-
-		var result = $http.get(getURL, employeeData);
+		var getURL = "http://localhost:9000/employees";
+		$scope.emps = [];
+		var result = $http.get(getURL, $scope.emps);
 
 		result.success(function(data, status, headers, config) {
 			$scope.message = data;
@@ -106,4 +56,4 @@ employee.controller('employerController, function($scope, $http) {
 		});
 	};
 
-} ]);
+});

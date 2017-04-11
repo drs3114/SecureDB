@@ -11,6 +11,7 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
 addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.6")
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "4.0.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "3.0.0")
+addSbtPlugin("com.github.play2war" % "play2-war-plugin" % "1.4-beta1")
 
 // Play enhancer - this automatically generates getters/setters for public fields
 // and rewrites accessors of these fields to use the getters/setters. Remove this

@@ -5,8 +5,13 @@ package controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
+import models.Department;
 import models.Dependent;
 import models.Employee;
+import models.Employer;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,17 +24,32 @@ public class EmployeeController extends Controller {
 
 	public Result addEmployee() {
 		System.out.println(request().body().asJson());
+		String eFirstName = request().body().asJson().get("fname").textValue();
+		String eLastName = request().body().asJson().get("lname").textValue();
+		String email = request().body().asJson().get("email").textValue();
+		String deptstr = request().body().asJson().get("department").textValue();
 
-		Employee employee = Json.fromJson(request().body().asJson(), Employee.class);
+		Department dept = Department.find.where().ilike("name", deptstr ).findUnique();
+		Employee employee = new Employee();
+		employee.setEmail(email);
+		employee.setFirstName(eFirstName);
+		employee.setLastName(eLastName);
+		Employer employer = Employer.find.where().eq("ID", 1).findUnique();
+		employee.setEmployer(employer);
 		employee.save();
 		return ok(Json.toJson(employee));
+		
 	}
 	
-	public Result addDependent(int eid){
+	public Result addDependent(){
 		System.out.println("ID: "+ request().body().asJson().get("id").textValue());
 		System.out.println("Name: "+ request().body().asJson().get("name").textValue());
 		System.out.println("Dependent To: "+ request().body().asJson().get("dependentTo").textValue());
 		System.out.println("Relationship: "+ request().body().asJson().get("relationship").textValue());
+		Dependent dependent = new Dependent();
+		dependent.setName(request().body().asJson().get("name").textValue());
+		dependent.setRelationship(request().body().asJson().get("relationship").textValue());
+		
 		return ok();
 	}
 
