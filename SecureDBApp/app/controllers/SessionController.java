@@ -16,8 +16,8 @@ import play.mvc.Result;
 public class SessionController extends Controller {
 	
 	public Result getUserSession(){
-		JsonNode json = Json.toJson(CallbackController.model);
-		return ok(json);
+		
+		return ok();
 	}
 
 }

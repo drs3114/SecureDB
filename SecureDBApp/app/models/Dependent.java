@@ -70,5 +70,13 @@ public class Dependent extends Model {
 	public void setRelationship(String relationship) {
 		this.relationship = relationship;
 	}
-
+	
+	public static Dependent copy(Dependent dependent){
+		Dependent newDependent = new Dependent();
+		newDependent.setDependentTo(dependent.getDependentTo());
+		newDependent.setId(dependent.getId());
+		newDependent.setName(dependent.getName());
+		newDependent.setRelationship(dependent.getRelationship());
+		return newDependent;
+	}
 }

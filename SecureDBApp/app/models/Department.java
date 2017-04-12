@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Model;
@@ -34,7 +34,7 @@ public class Department extends Model {
 	private String name;
 
 	@Column(name = "EMPLOYER")
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
 	public Employer employer;
 
 	@Column(name = "EMPLOYEES")

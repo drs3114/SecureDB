@@ -3,6 +3,7 @@
  */
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,41 +27,133 @@ public class EmployeeController extends Controller {
 		System.out.println(request().body().asJson());
 		String eFirstName = request().body().asJson().get("fname").textValue();
 		String eLastName = request().body().asJson().get("lname").textValue();
+		String eUName = request().body().asJson().get("uname").textValue();
 		String email = request().body().asJson().get("email").textValue();
 		String deptstr = request().body().asJson().get("department").textValue();
+		String urs = request().body().asJson().get("user").textValue();
+		String tkn = request().body().asJson().get("tkn").textValue();
+		String savedtoken = CallbackController.loggedInUsers.get(urs);
+		System.out.println("Saved token = " + savedtoken);
 
-		Department dept = Department.find.where().ilike("name", deptstr ).findUnique();
+		if (!savedtoken.equals(tkn.toString())) {
+			return status(UNAUTHORIZED, tkn);
+		}
+		List<Department> allDepts = Department.find.all();
+		List<Employer> allEmplr = Employer.find.all();
+		Employer employer = null;
+		Department dept = null;
+		for (Department department : allDepts) {
+			if (department.getName().equalsIgnoreCase(deptstr)) {
+				dept = department;
+				break;
+			}
+		}
+
+		for (Department department : allDepts) {
+			if (department.getName().equalsIgnoreCase(deptstr)) {
+				dept = department;
+				break;
+			}
+		}
+		for (Employer emplr_ : allEmplr) {
+			if (emplr_.getId() == 1) {
+				employer = emplr_;
+				break;
+			}
+		}
+
+		for (Department department : allDepts) {
+			System.out.println(department.getName());
+		}
+		for (Employer emplr_ : allEmplr) {
+			System.out.println(emplr_.getName());
+		}
+
+		if (employer == null) {
+			employer = new Employer();
+			employer.setName(urs);
+			employer.setNoOfEmployees(15000);
+			employer.setAddress("Bangalore, KA, India");
+			employer.save();
+		}
+		if (dept == null) {
+			dept = new Department();
+			dept.setEmployer(employer);
+			dept.setName(deptstr);
+			dept.setEmployees(new ArrayList<Employee>());
+			dept.save();
+		}
 		Employee employee = new Employee();
 		employee.setEmail(email);
 		employee.setFirstName(eFirstName);
 		employee.setLastName(eLastName);
-		Employer employer = Employer.find.where().eq("ID", 1).findUnique();
-		employee.setEmployer(employer);
+		employee.setUsername(eUName);
+		employee.setWorksFor(employer);
+		dept.getEmployees().add(employee);
+		dept.update();
 		employee.save();
-		return ok(Json.toJson(employee));
-		
+		System.out.println(employer.getName() + " added employee " + employee.getFirstName());
+
+		return ok();
+
 	}
-	
-	public Result addDependent(){
-		System.out.println("ID: "+ request().body().asJson().get("id").textValue());
-		System.out.println("Name: "+ request().body().asJson().get("name").textValue());
-		System.out.println("Dependent To: "+ request().body().asJson().get("dependentTo").textValue());
-		System.out.println("Relationship: "+ request().body().asJson().get("relationship").textValue());
-		Dependent dependent = new Dependent();
-		dependent.setName(request().body().asJson().get("name").textValue());
-		dependent.setRelationship(request().body().asJson().get("relationship").textValue());
-		
+
+	public Result addDependent() {
+		String name = request().body().asJson().get("dependentName").textValue();
+		String user = request().body().asJson().get("user").textValue();
+		String tkn = request().body().asJson().get("tkn").textValue();
+		String relnship = request().body().asJson().get("relationship").textValue();// relationship
+		String savedtoken = CallbackController.loggedInUsers.get(user);
+		System.out.println(request().body().asJson());
+		if (!savedtoken.equals(tkn.toString())) {
+			System.out.println("UNAUTHORIZED");
+			return status(UNAUTHORIZED, tkn);
+		}
+		Employee employee = null;
+		List<Employee> employees = Employee.find.all();
+		for (Employee empl : employees) {
+			if (empl.getUsername().equals(user.toString())) {
+				employee = empl;
+				break;
+			}
+		}
+		Dependent dependent = null;
+		if (employee != null) {
+			dependent = new Dependent();
+			dependent.setName(name);
+			dependent.setRelationship(relnship);
+			dependent.setDependentTo(employee);
+			dependent.save();
+		}
+		System.out.println(employee.getUsername() + " added dependent " + dependent.getName());
 		return ok();
 	}
 
-	public Result getAllEmployees() {
+	public Result getAllEmployees(String user, String token) {
+		String savedtoken = CallbackController.loggedInUsers.get(user);
+		if (!savedtoken.equals(token.toString())) {
+			return status(UNAUTHORIZED, token);
+		}
 		List<Employee> employees = Employee.find.all();
+
 		return ok(Json.toJson(employees));
 	}
 
-	public Result getAllDependents(int eid) {
-		List<Dependent> dependents = Dependent.find.where().eq("DEPENDENT_TO_ID", eid).findList();
-		return ok(Json.toJson(dependents));
+	public Result getAllDependents(String user, String token) {
+		String savedtoken = CallbackController.loggedInUsers.get(user);
+		if (!savedtoken.equals(token.toString())) {
+			return status(UNAUTHORIZED, token);
+		}
+		
+		List<Dependent> dependents = Dependent.find.all();
+		List<Dependent> validDependents = new ArrayList<>();
+		for (Dependent dependent : dependents) {
+			if(dependent.getDependentTo().getUsername().equals(user.toString())){
+				validDependents.add(Dependent.copy(dependent));
+			}
+		}
+		
+		return ok(Json.toJson(validDependents));
 	}
 
 }

@@ -4,18 +4,13 @@
 
 # Home page
 GET      /                           controllers.AppController.index()
-#POST    /person                     controllers.PersonController.addPerson()
-#GET     /person                     controllers.PersonController.getPersons()
-GET 		/employees					controllers.EmployeeController.getAllEmployees()
-#GET		/employee/*id				controllers.EmployeeController.getAllEmployees()
-#GET		/employee/*name				controllers.EmployeeController.getAllEmployees()
+GET 		/employees					controllers.EmployeeController.getAllEmployees(user ?="", token ?="")
 POST    /employee					controllers.EmployeeController.addEmployee()
-#POST	/employee/dependent			controllers.DependentController.addDependent()
-GET		/employee/*eid/dependents	controllers.EmployeeController.getAllDependents(eid: Int)
+GET		/employee/dependents	controllers.EmployeeController.getAllDependents(user ?="", token ?="")
 POST	/employee/dependent	 		controllers.EmployeeController.addDependent()
-#GET		/oauth/sso					controllers.CallbackController.oauthCallbck()
 OPTIONS /*all                           controllers.Application.preflight(all)
 GET		/login						controllers.LoginController.login()
+GET		/logout						controllers.LogoutController.logout(user ?="", token ?="")
 GET		/sessionDetails				controllers.SessionController.getUserSession()
 GET		/login/Callback					controllers.CallbackController.oauthCallbck(consumer ?="",  returnTo ?="",  oauth_token ?="",  username ?="",  userRole ?="")
 # Map static resources from the /public folder to the /assets URL path

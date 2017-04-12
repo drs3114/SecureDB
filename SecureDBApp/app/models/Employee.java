@@ -8,11 +8,10 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.avaje.ebean.Model;
@@ -34,6 +33,9 @@ public class Employee extends Model {
 
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Column(name="USERNAME")
+	private String username;
 
 	@Column(name = "EMAIL", unique = true)
 	private String email;
@@ -42,7 +44,7 @@ public class Employee extends Model {
 	private Date dateOfBirth;
 
 	@Column(name = "WORKS_FOR")
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private Employer worksFor;
 
 	public static Finder<Long, Employee> find = new Finder<>(Employee.class);
@@ -128,23 +130,47 @@ public class Employee extends Model {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return the username
 	 */
-	public Employer getEmployer() {
-		return this.worksFor;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
-	 * 
-	 * @param employer
+	 * @param username the username to set
 	 */
-	public void setEmployer(Employer employer) {
-		this.worksFor = employer;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the worksFor
+	 */
+	public Employer getWorksFor() {
+		return worksFor;
+	}
+
+	/**
+	 * @param worksFor the worksFor to set
+	 */
+	public void setWorksFor(Employer worksFor) {
+		this.worksFor = worksFor;
 	}
 
 	public Employee() {
 		super();
+	}
+	
+	public static Employee copy(Employee employee){
+		Employee newEmployee = new Employee();
+		newEmployee.setDateOfBirth(employee.getDateOfBirth());
+		newEmployee.setEmail(employee.getEmail());
+		newEmployee.setFirstName(employee.getFirstName());
+		newEmployee.setId(employee.getId());
+		newEmployee.setLastName(employee.getLastName());
+		newEmployee.setUsername(employee.getUsername());
+		newEmployee.setWorksFor(employee.getWorksFor());
+		return newEmployee;
 	}
 
 }
